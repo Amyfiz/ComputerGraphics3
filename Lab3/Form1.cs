@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Lab3
 {
@@ -26,6 +25,7 @@ namespace Lab3
 
         private Color _penColor;
         private Color _fillColor;
+
         public Form1()
         {
             InitializeComponent();
@@ -43,6 +43,18 @@ namespace Lab3
 
             _penColor = _pen.Color;
             _fillColor = _fillPen.Color;
+        }
+
+        private void Clear()
+        {
+            var _g = Graphics.FromImage(pictureBox1.Image);
+            _g.Clear(pictureBox1.BackColor);
+            pictureBox1.Refresh();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
 
         void ColorFill(object sender, MouseEventArgs e)
@@ -222,20 +234,7 @@ namespace Lab3
             pictureBox1.Image = _bm;
         }
 
-        private void Clear()
-        {
-            var _g = Graphics.FromImage(pictureBox1.Image);
-            _g.Clear(pictureBox1.BackColor);
-            pictureBox1.Refresh();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Clear();
-        }
-    
-
-    private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton1.Checked) //Рисовать
             {
@@ -251,7 +250,8 @@ namespace Lab3
                 pictureBox1.MouseDown -= OnMouseDown;
                 pictureBox1.MouseMove -= OnMouseMove;
                 pictureBox1.MouseDown -= PictureFill;
-                pictureBox1.MouseDown -= SelectEdge;
+                //pictureBox1.MouseDown -= SelectEdge;
+                pictureBox1.MouseDown -= PictureFill;
 
                 pictureBox1.MouseDown += ColorFill;
             }
@@ -261,6 +261,7 @@ namespace Lab3
                 pictureBox1.MouseMove -= OnMouseMove;
                 pictureBox1.MouseDown -= ColorFill;
                 pictureBox1.MouseDown -= SelectEdge;
+                //pictureBox1.MouseDown -= ColorFill;
 
                 pictureBox1.MouseDown += PictureFill;
             }
@@ -273,6 +274,11 @@ namespace Lab3
 
                 pictureBox1.MouseDown += SelectEdge;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Clear();
         }
     }
 }
